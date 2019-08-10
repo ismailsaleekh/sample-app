@@ -11,16 +11,6 @@
     <button id="submit-todo">submit</button>
     <div id="container"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
-    <script>
-      const reducer = Redux.combineReducers({
-        todos: (currentState = ['first', 'second'], action) => {
-          return currentState;
-        }
-      });
 
-      const store = Redux.createStore(reducer);
-
-      Window.store = store;
-    </script>
   </body>
 </html>
