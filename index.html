@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Redux app</title>
+  </head>
+  <body>
+    <input id="todo" type="text" />
+    <button id="submit-todo">submit</button>
+    <div id="container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
+    <script>
+      const reducer = Redux.combineReducers({
+        todos: (currentState = [], action) => {
+          switch (action.type) {
+            case 'ADD':
+              return [...currentState, action.payload];
+            case 'REMOVE':
+              return currentState.filter((v, i) => i !== action.payload);
+            default:
+              return currentState;
+          }
+        }
+      });
+
+      const store = Redux.createStore(reducer);
+
+      Window.store = store;
+
+      const render = () => {
+        const container = document.getElementById('container');
+        container.innerHTML = '';
+        const state = store.getState();
+
+        state.todos.forEach((element, index) => {
+          const e = document.createElement('div');
+          e.innerHTML = element;
+          container.appendChild(e);
+
+          e.onclick = () => {
+            store.dispatch({
+              type: 'REMOVE',
+              payload: index
+            });
+
+            render();
+          };
+        });
+      };
+
+      document.getElementById('submit-todo').onclick = () => {
+        store.dispatch({
+          type: 'ADD',
+          payload: document.getElementById('todo').value
+        });
+
+        render();
+      };
+    </script>
+  </body>
+</html>
