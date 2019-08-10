@@ -13,13 +13,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
     <script>
       const reducer = Redux.combineReducers({
-        todos: (currentState = [], action) => {
-          switch (action.type) {
-            case 'ADD':
-              return [...currentState, action.payload];
-            default:
-              return currentState;
-          }
+        todos: (currentState = ['first', 'second'], action) => {
+          return currentState;
         }
       });
 
@@ -39,14 +34,7 @@
         });
       };
 
-      document.getElementById('submit-todo').onclick = () => {
-        store.dispatch({
-          type: 'ADD',
-          payload: document.getElementById('todo').value
-        });
-
-        render();
-      };
+      render()
     </script>
   </body>
 </html>
